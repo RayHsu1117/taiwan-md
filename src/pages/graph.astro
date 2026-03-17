@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { readdir, readFile } from 'fs/promises';
+import { resolve, join } from 'path';
 
 const categories = [
   'history', 'geography', 'culture', 'food', 'art', 'music',
@@ -122,6 +124,59 @@ for (const [tag, articleIds] of Object.entries(tagMap)) {
       }
     }
   }
+}
+
+// Parse Hub wikilinks to create Hub→article edges
+const categoryMapping: Record<string, string> = {
+  'history': 'History', 'geography': 'Geography', 'culture': 'Culture',
+  'food': 'Food', 'art': 'Art', 'music': 'Music',
+  'technology': 'Technology', 'nature': 'Nature', 'people': 'People',
+  'society': 'Society', 'economy': 'Economy', 'lifestyle': 'Lifestyle'
+};
+const nodeIds = new Set(nodes.map(n => n.id));
+
+for (const [cat, folder] of Object.entries(categoryMapping)) {
+  try {
+    const hubDir = resolve(process.cwd(), 'knowledge', folder);
+    const files = await readdir(hubDir);
+    const hubFile = files.find(f => f.startsWith('_') && f.includes('Hub'));
+    if (hubFile) {
+      const content = await readFile(join(hubDir, hubFile), 'utf-8');
+      // Extract [[wikilink]] references
+      const wikilinks = content.match(/\[\[([^\]|]+?)(?:\|[^\]]+?)?\]\]/g) || [];
+      for (const wl of wikilinks) {
+        const target = wl.replace(/\[\[/, '').replace(/\]\]/, '').split('|')[0].trim();
+        // Check if target matches an article node
+        const matchNode = nodes.find(n => 
+          n.label === target || 
+          n.label === `🌐 ${target}` ||
+          n.id === `${cat}/${target}` ||
+          n.id === `${cat}/${encodeURIComponent(target)}`
+        );
+        if (matchNode && matchNode.id !== cat) {
+          // Avoid duplicate edges
+          const exists = edges.some(e => 
+            (e.source === cat && e.target === matchNode.id) ||
+            (e.source === matchNode.id && e.target === cat)
+          );
+          if (!exists) {
+            edges.push({ source: cat, target: matchNode.id });
+          }
+        }
+        // Cross-category Hub links (e.g. History Hub mentions [[茶文化]])
+        if (!matchNode) {
+          for (const [otherCat] of Object.entries(categoryMapping)) {
+            if (otherCat === cat) continue;
+            const crossNode = nodes.find(n => n.label === target && n.group === otherCat);
+            if (crossNode) {
+              edges.push({ source: cat, target: crossNode.id });
+              break;
+            }
+          }
+        }
+      }
+    }
+  } catch {}
 }
 
 const graphData = JSON.stringify({ nodes, edges });
