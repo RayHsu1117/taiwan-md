@@ -38,6 +38,35 @@ import CategoryGrid from '../components/CategoryGrid.astro';
     </div>
   </section>
 
+  <section class="cover-story">
+    <div class="cover-content">
+      <h2>如何理解台灣？</h2>
+      <div class="cover-text">
+        <p class="lead">
+          台灣是一座面積只有 36,000 平方公里的島嶼，卻裝著整個世界的複雜度。
+        </p>
+        <p>
+          從 3,000 公尺的高山到熱帶海岸，從 6,000 年前的南島語族到今天的半導體帝國，
+          從戒嚴時期的沉默到亞洲第一個同婚合法化——台灣的故事不是一條直線，而是一張網。
+        </p>
+        <p>
+          你可能知道台積電，但你知道台灣的便利商店密度世界第一嗎？<br>
+          你可能吃過珍珠奶茶，但你知道台灣茶農每年用「比賽茶」的方式決一死戰嗎？<br>
+          你可能聽說過台灣的民主，但你知道這座島在 40 年前還在戒嚴嗎？
+        </p>
+        <p>
+          <strong>Taiwan.md 不是要給你答案。</strong><br>
+          我們想做的，是給你一張地圖——一張讓你自己走進台灣的地圖。
+        </p>
+        <p class="cover-cta-text">
+          從任何一個面向開始。歷史、美食、科技、自然。<br>
+          每條路都會帶你到意想不到的地方。<br>
+          因為這就是台灣。
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section class="features">
     <h2 class="section-title">為什麼需要 Taiwan.md？</h2>
     <div class="features-grid">
@@ -373,5 +402,45 @@ import CategoryGrid from '../components/CategoryGrid.astro';
       flex-direction: column;
       align-items: center;
     }
+  }
+
+  /* Cover Story */
+  .cover-story {
+    padding: 4rem 2rem;
+    background: #fefefe;
+  }
+  .cover-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cover-content h2 {
+    font-size: 2rem;
+    color: #1a1a2e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .cover-text {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #334155;
+  }
+  .cover-text .lead {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #1a1a2e;
+    margin-bottom: 1.5rem;
+  }
+  .cover-text p {
+    margin-bottom: 1.2rem;
+  }
+  .cover-text strong {
+    color: #1a1a2e;
+  }
+  .cover-cta-text {
+    font-style: italic;
+    color: #64748b;
+    border-left: 3px solid #3b82f6;
+    padding-left: 1rem;
+    margin-top: 1.5rem;
   }
 </style>
