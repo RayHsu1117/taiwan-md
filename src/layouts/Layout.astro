@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { title, description = '讓全世界完整認識台灣', lang = 'zh-TW', image, type } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -19,10 +20,7 @@ const { title, description = '讓全世界完整認識台灣', lang = 'zh-TW', i
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | Taiwan.md</title>
-    
-    <!-- SEO Meta Tags -->
     <SEO title={title} description={description} lang={lang} image={image} type={type} />
-    <!-- Google Analytics -->
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JGC5W00N7T"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -30,262 +28,261 @@ const { title, description = '讓全世界完整認識台灣', lang = 'zh-TW', i
       gtag('js', new Date());
       gtag('config', 'G-JGC5W00N7T');
     </script>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background: #fff;
-      }
-      
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
-      }
-      
-      header {
-        background: #1e40af;
-        color: white;
-        padding: 1rem 0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      }
-      
-      .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 2rem;
-      }
-      
-      .nav-menu {
-        display: flex;
-        gap: 1.5rem;
-        align-items: center;
-      }
-      
-      .nav-link {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        background: none;
-        border: none;
-        font-size: 1rem;
-        cursor: pointer;
-      }
-      
-      .nav-link:hover {
-        color: #fbbf24;
-        transform: translateY(-1px);
-      }
-      
-      .github-star {
-        font-size: 0.8rem;
-      }
-      
-      .knowledge-graph {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-      
-      .knowledge-graph:hover {
-        color: white;
-        transform: none;
-      }
-      
-      @media (max-width: 768px) {
-        .header-content {
-          flex-wrap: wrap;
-          gap: 1rem;
-        }
-        
-        .nav-menu {
-          order: 3;
-          width: 100%;
-          justify-content: center;
-          gap: 1rem;
-        }
-        
-        .nav-link {
-          font-size: 0.9rem;
-        }
-        
-        .footer-main {
-          grid-template-columns: 1fr;
-          text-align: center;
-        }
-        
-        .footer-links {
-          align-items: center;
-        }
-      }
-      
-      .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-decoration: none;
-        color: white;
-      }
-      
-      .lang-toggle {
-        display: flex;
-        gap: 0.5rem;
-      }
-      
-      .lang-btn {
-        padding: 0.25rem 0.5rem;
-        background: rgba(255,255,255,0.2);
-        color: white;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background 0.2s;
-      }
-      
-      .lang-btn:hover {
-        background: rgba(255,255,255,0.3);
-      }
-      
-      main {
-        min-height: calc(100vh - 120px);
-        padding: 2rem 0;
-      }
-      
-      footer {
-        background: #1f2937;
-        padding: 3rem 0 1rem;
-        color: #d1d5db;
-        border-top: 1px solid #374151;
-      }
-      
-      .footer-content {
-        font-size: 0.9rem;
-      }
-      
-      .footer-main {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-        margin-bottom: 2rem;
-      }
-      
-      .footer-section h3 {
-        color: #fbbf24;
-        margin-bottom: 1rem;
-        font-size: 1.25rem;
-      }
-      
-      .footer-section h4 {
-        color: white;
-        margin-bottom: 0.75rem;
-        font-size: 1rem;
-      }
-      
-      .footer-section p {
-        line-height: 1.6;
-        margin-bottom: 0.5rem;
-      }
-      
-      .footer-heart {
-        color: #22c55e;
-        font-weight: 500;
-      }
-      
-      .footer-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      
-      .footer-links a {
-        color: #9ca3af;
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-      
-      .footer-links a:hover {
-        color: #fbbf24;
-      }
-      
-      .footer-bottom {
-        text-align: center;
-        padding-top: 1.5rem;
-        border-top: 1px solid #374151;
-        color: #9ca3af;
-      }
-    </style>
   </head>
   <body>
     <header>
-      <div class="container">
-        <div class="header-content">
-          <a href="/" class="logo">Taiwan.md</a>
-          <nav class="nav-menu">
-            <a href="#categories" class="nav-link">探索</a>
-            <a href="/about" class="nav-link">關於</a>
-            <a href="https://github.com/frank890417/taiwan-md" target="_blank" class="nav-link">
-              GitHub
-              <span class="github-star">⭐</span>
-            </a>
-            <button class="nav-link knowledge-graph" title="知識圖譜（開發中）">
-              🕸️
-            </button>
-          </nav>
-          <div class="lang-toggle">
-            <a href="/" class="lang-btn">中文</a>
-            <a href="/en" class="lang-btn">English</a>
-          </div>
+      <div class="header-inner">
+        <a href="/" class="logo">
+          <span class="logo-icon">🇹🇼</span>
+          <span class="logo-text">Taiwan<span class="logo-dot">.md</span></span>
+        </a>
+        <nav>
+          <a href="/#categories" class="nav-link">探索</a>
+          <a href="/graph" class="nav-link">🕸️ 圖譜</a>
+          <a href="/about" class="nav-link">關於</a>
+          <a href="https://github.com/frank890417/taiwan-md" target="_blank" class="nav-link gh">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            GitHub
+          </a>
+        </nav>
+        <div class="lang-toggle">
+          <a href="/" class:list={["lang-btn", { active: !currentPath.startsWith('/en') }]}>中文</a>
+          <a href="/en" class:list={["lang-btn", { active: currentPath.startsWith('/en') }]}>EN</a>
         </div>
       </div>
     </header>
 
     <main>
-      <div class="container">
-        <slot />
-      </div>
+      <slot />
     </main>
 
     <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-main">
-            <div class="footer-section">
-              <h3>Taiwan.md</h3>
-              <p>開源、AI-friendly 的台灣知識庫</p>
-              <p class="footer-heart">Curated with ❤️ from Taiwan</p>
-            </div>
-            <div class="footer-section">
-              <h4>授權</h4>
-              <p>本專案採用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh-tw" target="_blank">CC BY-SA 4.0</a> 授權</p>
-            </div>
-            <div class="footer-section">
-              <h4>聯繫</h4>
-              <p>專案維護：<a href="mailto:cheyu.wu@monoame.com">cheyu.wu@monoame.com</a></p>
-            </div>
-            <div class="footer-section">
-              <h4>連結</h4>
-              <div class="footer-links">
-                <a href="https://github.com/frank890417/taiwan-md" target="_blank">GitHub</a>
-                <a href="https://github.com/frank890417/taiwan-md/tree/main/knowledge" target="_blank">Raw Markdown 文件</a>
-                <a href="/contributing">貢獻指南</a>
-                <a href="/license">授權條款</a>
-              </div>
-            </div>
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="footer-logo">🇹🇼 Taiwan.md</span>
+            <p>開源、AI-friendly 的台灣知識庫</p>
+            <p class="footer-heart">Curated with ❤️ from Taiwan</p>
           </div>
-          <div class="footer-bottom">
-            <p>&copy; 2024 Taiwan.md - 開源台灣知識庫</p>
+          <div class="footer-col">
+            <h4>探索</h4>
+            <a href="/history">歷史</a>
+            <a href="/culture">文化</a>
+            <a href="/food">美食</a>
+            <a href="/technology">科技</a>
+            <a href="/nature">自然</a>
+            <a href="/society">社會</a>
           </div>
+          <div class="footer-col">
+            <h4>專案</h4>
+            <a href="https://github.com/frank890417/taiwan-md" target="_blank">GitHub</a>
+            <a href="/about">關於</a>
+            <a href="/graph">知識圖譜</a>
+            <a href="https://github.com/frank890417/taiwan-md/blob/main/CONTRIBUTING.md" target="_blank">貢獻指南</a>
+          </div>
+          <div class="footer-col">
+            <h4>授權與聯繫</h4>
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh-tw" target="_blank">CC BY-SA 4.0</a>
+            <a href="mailto:cheyu.wu@monoame.com">cheyu.wu@monoame.com</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          &copy; 2026 Taiwan.md — 開源台灣知識庫
         </div>
       </div>
     </footer>
+
+    <!-- Floating .md button -->
+    <a id="md-btn" class="floating-md" title="查看 Raw Markdown 版本" target="_blank">
+      .md
+    </a>
+
+    <script is:inline>
+      // Set .md button href based on current path
+      const btn = document.getElementById('md-btn');
+      const path = window.location.pathname.replace(/\/$/, '') || '/index';
+      // Link to GitHub raw markdown
+      const ghBase = 'https://github.com/frank890417/taiwan-md/blob/main/knowledge';
+      if (path === '/index' || path === '') {
+        btn.href = ghBase;
+      } else {
+        btn.href = ghBase + '/zh-TW' + path + '.md';
+      }
+    </script>
   </body>
 </html>
+
+<style is:global>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .logo-icon { font-size: 1.4rem; }
+  .logo-dot { color: #3b82f6; }
+  nav {
+    display: flex;
+    gap: 1.25rem;
+    margin-left: auto;
+  }
+  .nav-link {
+    text-decoration: none;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .nav-link:hover { color: #1a1a2e; }
+  .nav-link.gh svg { opacity: 0.7; }
+  .lang-toggle {
+    display: flex;
+    gap: 2px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 2px;
+  }
+  .lang-btn {
+    padding: 0.25rem 0.6rem;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  .lang-btn.active {
+    background: #fff;
+    color: #1a1a2e;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  }
+
+  /* Main - full width */
+  main {
+    min-height: calc(100vh - 60px);
+  }
+
+  /* Footer */
+  footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 3rem 0 1.5rem;
+  }
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .footer-brand { }
+  .footer-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .footer-heart { color: #22c55e; margin-top: 0.5rem; }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .footer-col h4 {
+    color: white;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+  .footer-col a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.15s;
+  }
+  .footer-col a:hover { color: #e2e8f0; }
+  .footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1e293b;
+    font-size: 0.8rem;
+  }
+
+  /* Floating .md button */
+  .floating-md {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    background: #1a1a2e;
+    color: #3b82f6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+    z-index: 40;
+  }
+  .floating-md:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    background: #3b82f6;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .header-inner { padding: 0.75rem 1rem; gap: 1rem; }
+    nav { gap: 0.75rem; }
+    .nav-link { font-size: 0.8rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .floating-md { bottom: 1rem; right: 1rem; }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
