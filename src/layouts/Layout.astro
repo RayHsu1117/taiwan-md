@@ -94,6 +94,8 @@ for (const [slug, folder] of Object.entries(categoryMapping)) {
 }
 const currentPath = Astro.url.pathname;
 const isEn = lang === 'en';
+const categorySlug = category?.toLowerCase() || '';
+const jfClass = categorySlug ? `jf-${categorySlug}` : '';
 
 const i18n = {
   nav: {
@@ -201,8 +203,10 @@ const navConfig = [
       gtag('js', new Date());
       gtag('config', 'G-JGC5W00N7T');
     </script>
+    <!-- justfont Webfont — script URL from justfont project dashboard -->
+    <!-- TODO: Replace with actual justfont project JS after configuring fonts on webfont.justfont.com -->
   </head>
-  <body>
+  <body class={jfClass}>
     <div id="lang-banner" class="lang-banner" style="display:none;">
       <span
         >🌐 English version available → <a href={enLink}>Switch to English</a
@@ -845,9 +849,16 @@ const navConfig = [
     color: white;
   }
 
+  /* ===== justfont Webfont — Phase 1: 5 fonts ===== */
+  /* 1. 蘭陽明體 W3 (lanyang-mincho) → 內文 */
+  /* 2. 蘭陽黑體 W8/W10 (lanyang-gothic) → UI/標題 */
+  /* 3. jf 柑仔蜜 (jf-kanazimi) → 美食分類標題 */
+  /* 4. 金萱半糖 (jinxuan) → blockquote 引言 */
+  /* 5. 日星宋體貳號 (rixing-song) → 歷史分類標題 */
+
   body {
-    font-family: 'Noto Serif TC', 'Source Han Serif TC', 'PMingLiU', serif;
-    font-weight: 600;
+    font-family: 'lanyang-mincho', 'Noto Serif TC', 'Source Han Serif TC', 'PMingLiU', serif;
+    font-weight: 300;
     line-height: 1.6;
     color: #1a1a2e;
     background:
@@ -859,6 +870,31 @@ const navConfig = [
       linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     -webkit-font-smoothing: antialiased;
   }
+
+  /* Global heading fonts — 蘭陽黑體 */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'lanyang-gothic', 'Noto Sans TC', 'Source Han Sans TC', sans-serif;
+  }
+  h1 { font-weight: 900; }
+  h2 { font-weight: 800; }
+  h3, h4 { font-weight: 700; }
+
+  /* Blockquote — 金萱半糖 */
+  main blockquote {
+    font-family: 'jinxuan', 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  /* Nav/UI — 蘭陽黑體 W8 */
+  nav, button, .btn-primary, .btn-secondary, .btn-cta, [class*="btn"] {
+    font-family: 'lanyang-gothic', 'Noto Sans TC', 'Source Han Sans TC', sans-serif;
+    font-weight: 800;
+  }
+
+  /* Category-specific title fonts */
+  .jf-food h1 { font-family: 'jf-kanazimi', 'Noto Sans TC', sans-serif; }
+  .jf-history h1 { font-family: 'rixing-song', 'Noto Serif TC', serif; }
 
   /* Header */
   header {

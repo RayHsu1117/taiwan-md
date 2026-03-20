@@ -203,6 +203,7 @@ const processedContent = marked.parse(resolvedContent, { renderer });
   dateModified={frontmatter.modified || frontmatter.date || new Date().toISOString()}
   content={content}
   lang="en"
+  category={categoryInfo?.name}
 >
   <!-- Reading Progress Bar -->
   <div class="reading-progress" id="reading-progress"></div>
